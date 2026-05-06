@@ -1,46 +1,16 @@
 @extends('layouts.app')
 
-@section('title', 'All Tasks')
+@section('title', 'Create Task')
 
 @section('content')
 
-<!-- {{-- Page Header --}}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h4 class="fw-bold mb-0">{{ $pageTitle ?? 'All Tasks' }}</h4>
-        <small class="text-muted">Manage and track your tasks</small>
-    </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTaskModal">
-        <i class="bi bi-plus-circle me-1"></i> New Task
-    </button>
-</div> -->
-
-{{-- Stats --}}
-<x-task-stats :tasks="$tasks" />
-
-{{-- Task List --}}
-<div class="card border-0 shadow-sm">
-    <div class="card-body p-0">
-        @forelse($tasks as $task)
-            <x-task-item :task="$task" />
-        @empty
-            <div class="text-center py-5 text-muted">
-                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                No tasks yet.
-                <a href="#" data-bs-toggle="modal" data-bs-target="#createTaskModal">Create your first task</a>
-            </div>
-        @endforelse
-    </div>
-</div>
-
-{{-- Create Task Modal --}}
-<div class="modal fade" id="createTaskModal" tabindex="-1" data-bs-backdrop="true">
+<div class="modal fade" id="createTaskModal" tabindex="-1" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow">
 
             <div class="modal-header border-0 pb-0">
                 <h5 class="modal-title fw-bold">New Task</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <a href="{{ route('tasks.index') }}" class="btn-close"></a>
             </div>
 
             <div class="modal-body px-4 py-3">
@@ -98,11 +68,10 @@
 
                     {{-- Buttons --}}
                     <div class="d-flex gap-2 mt-4">
-                        <button type="button"
-                                class="btn btn-outline-secondary flex-fill"
-                                data-bs-dismiss="modal">
+                        <a href="{{ route('tasks.index') }}"
+                           class="btn btn-outline-secondary flex-fill">
                             Cancel
-                        </button>
+                        </a>
                         <button type="submit" class="btn btn-primary flex-fill fw-semibold">
                             <i class="bi bi-check-lg me-1"></i> Save Task
                         </button>
@@ -115,13 +84,10 @@
     </div>
 </div>
 
-{{-- Auto reopen modal if validation fails --}}
-@if($errors->any())
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         new bootstrap.Modal(document.getElementById('createTaskModal')).show();
     });
 </script>
-@endif
 
 @endsection
