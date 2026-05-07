@@ -16,9 +16,7 @@ Route::get('/tasks/completed', [TaskController::class, 'completed'])->name('task
 Route::get('/tasks/overdue',   [TaskController::class, 'overdue'])->name('tasks.overdue');
 Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('tasks.toggle'); // ← add this
 
- login
-// Resource LAST
-Route::resource('tasks', TaskController::class); 
+
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginStore'])->name('login.store');
