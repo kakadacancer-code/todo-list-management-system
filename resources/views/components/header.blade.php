@@ -50,11 +50,19 @@
                     </a>
                 </li>
                 <li><hr class="dropdown-divider"></li>
-                <li>
-                    <a class="dropdown-item d-flex align-items-center gap-2 text-danger" href="#">
-                        <i class="bi bi-box-arrow-right"></i> Logout
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+
+                <button type="submit"
+                    class="dropdown-item d-flex align-items-center gap-2 text-danger">
+                    <i class="bi bi-box-arrow-right"></i>Logout
+                </button>
+                </form>
+                <!-- <li>
+                    <a class="" href="#">
+                         Logout
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
 
