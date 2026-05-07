@@ -16,7 +16,7 @@ class AuthController extends Controller
     }
 
     // Signup Page
-    public function signup()
+    public function signup()    
     {
         return view('auth.signup');
     }

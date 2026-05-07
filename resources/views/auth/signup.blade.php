@@ -44,7 +44,7 @@
 
 <div class="min-h-screen flex items-center justify-center px-4">
 
-    {{-- 🔥 CHANGED: max-w-md → max-w-sm --}}
+    {{--  CHANGED: max-w-md → max-w-sm --}}
     <div class="card w-full max-w-sm rounded-2xl p-5 shadow-2xl text-white">
 
         {{-- Title --}}

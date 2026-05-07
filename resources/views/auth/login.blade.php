@@ -44,7 +44,7 @@
 
 <div class="min-h-screen flex items-center justify-center px-4">
 
-    {{-- 🔥 CHANGED: max-w-md → max-w-sm --}}
+    {{--  CHANGED: max-w-md → max-w-sm --}}
     <div class="card w-full max-w-sm rounded-2xl p-5 shadow-2xl text-white">
 
         <h1 class="text-2xl font-bold text-center mb-3">
@@ -105,7 +105,7 @@
             </div>
 
             <div class="text-right">
-                <a href="#" class="text-xs text-blue-400 hover:underline">
+                <a href="{{ route('register') }}" class="text-xs text-blue-400 hover:underline">
                     Forgot password?
                 </a>
             </div>
