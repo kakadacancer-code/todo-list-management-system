@@ -6,23 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
-
     protected $fillable = [
-        'user_id',
-        'status',
-        'priority_id',
-        'title',
-        'description',
-        'due_date',
+        'user_id', 'title', 'description', 'due_date', 'status', 'priority_id'
     ];
 
-
-    // Relationship
-
-    public function user()
-    {
-        return $this->hasMany(User::class);
-    }
+    protected $casts = [
+        'due_date' => 'date',
+    ];
 
     public function priority()
     {
