@@ -24,6 +24,7 @@
             <div class="fw-semibold {{ $task->status === 'completed' ? 'text-decoration-line-through text-muted' : '' }}">
                 {{ $task->title }}
             </div>
+            <p class="text-muted mb-1">{{ $task->description ?? 'No description provided.' }}</p>
             <small class="text-muted">
                 <i class="bi bi-calendar3 me-1"></i>
                 {{ $task->due_date ? $task->due_date->format('M d, Y') : 'No due date' }}

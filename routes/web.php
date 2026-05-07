@@ -8,12 +8,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Named routes FIRST
+// Named routes FIRST form sidebar
 Route::get('/tasks/today',     [TaskController::class, 'today'])->name('tasks.today');
 Route::get('/tasks/upcoming',  [TaskController::class, 'upcoming'])->name('tasks.upcoming');
 Route::get('/tasks/completed', [TaskController::class, 'completed'])->name('tasks.completed');
 Route::get('/tasks/overdue',   [TaskController::class, 'overdue'])->name('tasks.overdue');
 Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('tasks.toggle'); // ← add this
 
-// Resource LAST
-Route::resource('tasks', TaskController::class); // ← make sure this is here
+
+
+
+
+// All lisk
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+// show form
+Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.create');
+// store new task
+Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+// show new task
+Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+// show form edit but for edit not yet
+Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
+// for update task 
+Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+// for deleted task
+Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
