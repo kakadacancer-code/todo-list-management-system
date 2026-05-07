@@ -4,16 +4,6 @@
 
 @section('content')
 
-<!-- {{-- Page Header --}}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h4 class="fw-bold mb-0">{{ $pageTitle ?? 'All Tasks' }}</h4>
-        <small class="text-muted">Manage and track your tasks</small>
-    </div>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTaskModal">
-        <i class="bi bi-plus-circle me-1"></i> New Task
-    </button>
-</div> -->
 
 {{-- Stats --}}
 <x-task-stats :tasks="$tasks" />
@@ -86,7 +76,7 @@
                                 Priority <span class="text-danger">*</span>
                             </label>
                             <select name="priority_id" class="form-select @error('priority_id') is-invalid @enderror">
-                                <option value="1" {{ old('priority_id') == 1 ? 'selected' : '' }}>Low</option>
+                                <optionnull value="1" {{ old('priority_id') == 1 ? 'selected' : '' }}>Low</optionnull>
                                 <option value="2" {{ old('priority_id', 2) == 2 ? 'selected' : '' }}>Medium</option>
                                 <option value="3" {{ old('priority_id') == 3 ? 'selected' : '' }}>High</option>
                             </select>

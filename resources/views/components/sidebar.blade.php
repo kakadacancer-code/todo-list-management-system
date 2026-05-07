@@ -3,9 +3,9 @@
     <!-- Logo -->
     <div class="mb-4 border-bottom border-secondary pb-3">
         <h5 class="text-white mb-0 fw-bold">
-            <i class="bi bi-check2-square me-2 text-primary"></i>SimpleTrack
+            <i class="bi bi-check2-square me-2 text-primary"></i>ToDo List
         </h5>
-        <small class="text-secondary ms-4">Task Management</small>
+        <small class="text-secondary ms-4">System Management</small>
     </div>
 
     <!-- Menu -->
