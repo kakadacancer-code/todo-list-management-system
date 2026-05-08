@@ -13,6 +13,7 @@
 </head>
 <body>
 
+    @auth
     <div class="d-flex">
 
         {{-- Sidebar --}}
@@ -22,7 +23,7 @@
         <div class="flex-grow-1 d-flex flex-column" style="min-height: 100vh;">
 
             {{-- Header --}}
-            <x-header :title="$pageTitle ?? 'Tasks'" />  {{-- ← only change this line --}}
+            <x-header :title="$pageTitle ?? 'Tasks'" />
 
             {{-- Page Content --}}
             <div class="p-4 flex-grow-1">
@@ -32,6 +33,13 @@
         </div>
 
     </div>
+    @endauth
+
+    @guest
+    <div>
+        @yield('content')
+    </div>
+    @endguest
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

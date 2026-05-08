@@ -1,14 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\EditTaskController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TaskController;
+
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('login');  // ← better than returning view directly
 });
+
+// ── Auth ─────────────────────────────────────────────────
+Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login',   [AuthController::class, 'login'])->name('login.post');
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register',[AuthController::class, 'register'])->name('register.post');
+Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
+
 
 // Named routes FIRST form sidebar
 Route::get('/tasks/today',     [TaskController::class, 'today'])->name('tasks.today');
@@ -16,19 +24,6 @@ Route::get('/tasks/upcoming',  [TaskController::class, 'upcoming'])->name('tasks
 Route::get('/tasks/completed', [TaskController::class, 'completed'])->name('tasks.completed');
 Route::get('/tasks/overdue',   [TaskController::class, 'overdue'])->name('tasks.overdue');
 Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('tasks.toggle'); // ← add this
-
- login
-// Resource LAST
-Route::resource('tasks', TaskController::class); 
-
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'loginStore'])->name('login.store');
-
-Route::get('/register', [AuthController::class, 'signup'])->name('register');
-Route::post('/register', [AuthController::class, 'signupStore'])->name('register.store');
-
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
 
 
 
@@ -41,11 +36,11 @@ Route::get('/tasks/create', [TaskController::class, 'create'])->name('tasks.crea
 Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
 // show new task
 Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
-// show form edit but for edit not yet
+// show form edit
 Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
 // for update task 
 Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
-// for deleted task
+// for delete task
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 
 
