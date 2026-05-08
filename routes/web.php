@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TaskController;
 
@@ -17,3 +17,11 @@ Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])->name('t
 
 // Resource LAST
 Route::resource('tasks', TaskController::class); // ← make sure this is here
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/profiles/edit', [UserController::class, 'create'])->name('profiles.edit');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+Route::get('/users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
