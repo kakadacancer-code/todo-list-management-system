@@ -2,72 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
-    // Login Page
-    public function login()
+    public function showLogin()
     {
         return view('auth.login');
     }
 
-    // Signup Page
-    public function signup()    
-    {
-        return view('auth.signup');
-    }
-
-    // Register User
-    public function signupStore(Request $request)
+    public function login(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
+            'email'    => 'required|email',
+            'password' => 'required|string',
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return redirect('/tasks');
-    }
-
-    // Login User
-    public function loginStore(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        if (Auth::attempt($credentials)) {
-
+        if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
-
-            return redirect('/tasks');
+            return redirect()->route('tasks.index');
         }
 
         return back()->withErrors([
-            'email' => 'Invalid email or password',
-        ]);
+            'email' => 'These credentials do not match our records.',
+        ])->withInput($request->only('email'));
     }
 
-    // Logout
+    public function showRegister()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('tasks.index');
+    }
+
     public function logout(Request $request)
     {
         Auth::logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }

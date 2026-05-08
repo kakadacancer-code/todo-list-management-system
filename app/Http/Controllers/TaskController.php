@@ -3,12 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth; // ← ADD THIS
 use App\Models\Task;
 
 class TaskController extends Controller
 {
+    // ── ADD THIS HELPER ───────────────────────────────────
+    private function checkAuth()
+    {
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        return null;
+    }
+
     public function index(Request $request)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $tasks = Task::with('priority')
                      ->when($request->search, fn($q) =>
                          $q->where('title', 'like', '%' . $request->search . '%')
@@ -21,6 +33,8 @@ class TaskController extends Controller
 
     public function today(Request $request)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $tasks = Task::with('priority')
                      ->whereDate('due_date', today())
                      ->when($request->search, fn($q) =>
@@ -34,6 +48,8 @@ class TaskController extends Controller
 
     public function upcoming(Request $request)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $tasks = Task::with('priority')
                      ->whereDate('due_date', '>', today())
                      ->where('status', '!=', 'completed')
@@ -48,6 +64,8 @@ class TaskController extends Controller
 
     public function completed(Request $request)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $tasks = Task::with('priority')
                      ->where('status', 'completed')
                      ->when($request->search, fn($q) =>
@@ -61,6 +79,8 @@ class TaskController extends Controller
 
     public function overdue(Request $request)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $tasks = Task::with('priority')
                      ->whereDate('due_date', '<', today())
                      ->where('status', '!=', 'completed')
@@ -75,20 +95,24 @@ class TaskController extends Controller
 
     public function create()
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         return redirect()->route('tasks.index');
     }
 
     public function store(Request $request)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date'    => 'nullable|date',
-            'priority_id' => 'required|integer|exists:priorities,id',
+            'priority_id' => 'required|in:1,2,3',
         ]);
 
         Task::create([
-            'user_id'     => null,
+            'user_id'     => Auth::id(), // ← UPDATED (was null)
             'title'       => $validated['title'],
             'description' => $validated['description'] ?? null,
             'due_date'    => $validated['due_date'] ?? null,
@@ -101,17 +125,20 @@ class TaskController extends Controller
 
     public function edit(Task $task)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         return view('tasks.edit', compact('task'));
     }
 
     public function update(Request $request, Task $task)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $validated = $request->validate([
             'title'       => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date'    => 'nullable|date',
-            'priority_id' => 'required|integer|exists:priorities,id',
-            'status'      => 'required|in:pending,in progress,completed',
+            'priority_id' => 'required|in:1,2,3',
         ]);
 
         $task->update($validated);
@@ -121,13 +148,16 @@ class TaskController extends Controller
 
     public function destroy(Task $task)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $task->delete();
         return redirect()->route('tasks.index');
     }
 
-    // ── Toggle Status ──────────────────────────────────────
     public function toggle(Task $task)
     {
+        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+
         $task->update([
             'status' => $task->status === 'completed' ? 'pending' : 'completed'
         ]);
