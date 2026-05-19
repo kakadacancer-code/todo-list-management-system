@@ -2,13 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 
 
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect()->route('login');  
 });
+
 
 // ── Auth ─────────────────────────────────────────────────
 
@@ -31,6 +33,9 @@ Route::post('/register', [AuthController::class, 'register'])
 // Logout User
 Route::post('/logout', [AuthController::class, 'logout'])
     ->name('logout');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 
 // Named routes FIRST form sidebar
@@ -57,5 +62,8 @@ Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.e
 Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 // for delete task
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
+
+
 
 

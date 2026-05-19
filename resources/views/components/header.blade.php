@@ -36,13 +36,14 @@
             <button class="btn btn-primary rounded-circle fw-bold d-flex align-items-center justify-content-center p-0"
                     style="width: 38px; height: 38px;"
                     data-bs-toggle="dropdown">
-                CR
+                LO
             </button>
             <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-2">
                 <li>
-                    <a class="dropdown-item d-flex align-items-center gap-2" href="#">
-                        <i class="bi bi-person"></i> Profile
-                    </a>
+                    <a class="dropdown-item d-flex align-items-center gap-2"
+                        href="{{ route('profile') }}">
+                            <i class="bi bi-person"></i> Profile
+                        </a>
                 </li>
                 <li>
                     <a class="dropdown-item d-flex align-items-center gap-2" href="#">

@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    @auth
+    @if(Auth::check() && !request()->routeIs('login', 'register'))
     <div class="d-flex">
 
         {{-- Sidebar --}}
@@ -33,13 +33,11 @@
         </div>
 
     </div>
-    @endauth
-
-    @guest
+    @else
     <div>
         @yield('content')
     </div>
-    @endguest
+    @endif
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
