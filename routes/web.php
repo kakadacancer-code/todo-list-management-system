@@ -7,15 +7,30 @@ use App\Http\Controllers\TaskController;
 
 
 Route::get('/', function () {
-    return redirect()->route('login');  // ← better than returning view directly
+    return redirect()->route('login');
 });
 
 // ── Auth ─────────────────────────────────────────────────
-Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login',   [AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register',[AuthController::class, 'register'])->name('register.post');
-Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
+
+// Show Login Page
+Route::get('/login', [AuthController::class, 'showLogin'])
+    ->name('login');
+
+// Login User
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.post');
+
+// Show Register Page
+Route::get('/register', [AuthController::class, 'showRegister'])
+    ->name('register');
+
+// Register User
+Route::post('/register', [AuthController::class, 'register'])
+    ->name('register.post');
+
+// Logout User
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
 
 
 // Named routes FIRST form sidebar
