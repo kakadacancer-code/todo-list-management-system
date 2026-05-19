@@ -2,20 +2,24 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
 
 
 
 Route::get('/', function () {
-    return redirect()->route('login');  // ← better than returning view directly
+    return redirect()->route('login');  
 });
 
-// ── Auth ─────────────────────────────────────────────────
+
 Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login',   [AuthController::class, 'login'])->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register',[AuthController::class, 'register'])->name('register.post');
 Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
+
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
 
 // Named routes FIRST form sidebar
@@ -42,5 +46,8 @@ Route::get('/tasks/{task}/edit', [TaskController::class, 'edit'])->name('tasks.e
 Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
 // for delete task
 Route::delete('/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
+
+
+
 
 

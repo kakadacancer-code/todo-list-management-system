@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth; // ← ADD THIS
+use Illuminate\Support\Facades\Auth; 
 use App\Models\Task;
 
 class TaskController extends Controller
 {
-    // ── ADD THIS HELPER ───────────────────────────────────
+    
     private function checkAuth()
     {
         if (!Auth::check()) {
@@ -19,7 +19,7 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
-        if ($redirect = $this->checkAuth()) return $redirect; // ← ADD
+        if ($redirect = $this->checkAuth()) return $redirect; 
 
         $tasks = Task::with('priority')
                      ->when($request->search, fn($q) =>

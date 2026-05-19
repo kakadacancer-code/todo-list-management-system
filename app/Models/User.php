@@ -16,9 +16,13 @@ class User extends Authenticatable
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name',
-        'email',
+        'name', 
+        'email', 
         'password',
+        'avatar', 
+        'phone', 
+        'bio', 
+        'birth_date',
     ];
 
     /**
@@ -39,4 +43,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function todos(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(\App\Models\Task::class);
+    }
+
 }
