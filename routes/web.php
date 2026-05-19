@@ -12,11 +12,27 @@ Route::get('/', function () {
 });
 
 
-Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login',   [AuthController::class, 'login'])->name('login.post');
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register',[AuthController::class, 'register'])->name('register.post');
-Route::post('/logout',  [AuthController::class, 'logout'])->name('logout');
+// ── Auth ─────────────────────────────────────────────────
+
+// Show Login Page
+Route::get('/login', [AuthController::class, 'showLogin'])
+    ->name('login');
+
+// Login User
+Route::post('/login', [AuthController::class, 'login'])
+    ->name('login.post');
+
+// Show Register Page
+Route::get('/register', [AuthController::class, 'showRegister'])
+    ->name('register');
+
+// Register User
+Route::post('/register', [AuthController::class, 'register'])
+    ->name('register.post');
+
+// Logout User
+Route::post('/logout', [AuthController::class, 'logout'])
+    ->name('logout');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
